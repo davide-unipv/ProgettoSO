@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import it.unipv.so.Services;
+
 public class ConnectedClient extends Thread{
 private Socket socket;
 	
@@ -24,11 +26,9 @@ private Socket socket;
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			
 			String vmMessage = in.readLine();
-			System.out.println(fattoriale(Integer.parseInt(vmMessage)));
+			if(vmMessage.equals("FATTORIALE")) System.out.println(fattoriale(3));
+			else System.out.println("non posso fare nulla");
 			
-		
-        
-			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

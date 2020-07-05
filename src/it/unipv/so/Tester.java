@@ -18,11 +18,16 @@ public class Tester {
         Server server = new Server(port);
         server.start();
       
-		for(int i=0;i<13;i++){
+        
+        Client c=new Client();
+		//c.connectToServer("ciao sono il primo client");
+		
+       	/*
+		 * for(int i=0;i<13;i++){
 			Client c=new Client();
 			c.connectToServer(i+"");
 		}
-        
+        */
 
 	}
 

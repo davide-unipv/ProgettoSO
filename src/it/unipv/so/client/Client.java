@@ -6,14 +6,24 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import it.unipv.so.Services;
 
-public class Client {
+public class Client extends Thread{
 	
 
 	private Socket socket;
 	private BufferedReader in;
 	private PrintWriter out;
+	private Services message;
 	
+	public Services getMessage() {
+		return message;
+	}
+
+	public void setMessage(Services message) {
+		this.message = message;
+	}
+
 	/**
 	 * Costruttore della classe Client. 
 	 * Istanzia la socket, il BufferedReader e il PrintWriter.
@@ -26,14 +36,15 @@ public class Client {
 
 	/**
 	 * Invia al server una stringa.
-	 * @param info informazioni da inviare al server
+	 * @param message2 informazioni da inviare al server
 	 * @throws IOException eccezione di IO
 	 */
-	public void connectToServer(String info) throws IOException {
-		out.println(info);
+	private void connectToServer(Services message2) throws IOException {
+		out.println(message2);
 		
 	}
-	public void closeConnectioen() throws IOException{
+	
+	public void closeConnection() throws IOException{
 		socket.close();
 	}
 	/**
@@ -47,4 +58,15 @@ public class Client {
 		out.println(type);
 		return in.readLine();
 	}
+	
+	@Override
+	public void run() {
+		try {
+			connectToServer(message);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
