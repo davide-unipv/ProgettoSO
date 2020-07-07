@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import it.unipv.so.Services;
 
 public class Client extends Thread{
 	private Socket socket;
@@ -33,7 +31,6 @@ public class Client extends Thread{
 	 * @throws IOException eccezione di IO
 	 */
 	public String notifyServer(String info) throws IOException {
-		//notifyAll();
 		out.println(info);
 		return in.readLine();
 	}

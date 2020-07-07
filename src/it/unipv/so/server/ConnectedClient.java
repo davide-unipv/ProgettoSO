@@ -30,9 +30,14 @@ public class ConnectedClient extends Thread{
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);			
+		String message;
 		
-				
-				String message = in.readLine();
+		
+		//http://wiki.tes.mi.it/index.php/Zanetti-chat_client/server_java
+               
+           
+
+				message = in.readLine();
 				if (message != null) { //se il messaggio ricevuto è nullo non fa niente e chiude la socket
 					String[] msgParts = message.split("/");
 					Services s=Services.valueOf(msgParts[0]);
@@ -45,6 +50,7 @@ public class ConnectedClient extends Thread{
 						out.println(result);
 					}
 				}
+		
 				socket.close();
 			
 		} catch (IOException e) {
