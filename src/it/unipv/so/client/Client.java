@@ -9,64 +9,53 @@ import java.net.UnknownHostException;
 import it.unipv.so.Services;
 
 public class Client extends Thread{
-	
-
 	private Socket socket;
 	private BufferedReader in;
 	private PrintWriter out;
-	private Services message;
+	private String message;
+	private static final String IP_ADDRESS = "localhost";
+	private static final int PORT = 8888;
 	
-	public Services getMessage() {
-		return message;
-	}
-
-	public void setMessage(Services message) {
-		this.message = message;
-	}
-
 	/**
-	 * Costruttore della classe Client. 
+	 * Costruttore della classe VendingMachineClient. 
 	 * Istanzia la socket, il BufferedReader e il PrintWriter.
+	 * @throws IOException eccezione di IO
 	 */
-	public Client() throws UnknownHostException, IOException {
-		socket = new Socket("localhost", 8888);
+	public Client() throws IOException {
+		socket = new Socket(IP_ADDRESS, PORT);
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(socket.getOutputStream(), true);
 	}
+	
+	/**
+	 * Invia al server le informazioni attuali della macchinetta.
+	 * @param info informazioni sullo stato della vending machine
+	 * @throws IOException eccezione di IO
+	 */
+	public String notifyServer(String info) throws IOException {
+		//notifyAll();
+		out.println(info);
+		return in.readLine();
+	}
 
 	/**
-	 * Invia al server una stringa.
-	 * @param message2 informazioni da inviare al server
+	 * Alla prima connessione, la macchinetta invia il suo tipo alla company
+	 * e viene registrata, ricevendo il suo ID.
+	 * @param type tipo della vending machine
+	 * @return ID id della vending machine
 	 * @throws IOException eccezione di IO
 	 */
-	private void connectToServer(Services message2) throws IOException {
-		out.println(message2);
-		
-	}
-	
-	public void closeConnection() throws IOException{
-		socket.close();
-	}
-	/**
-	 * Alla prima connessione il client invia una stringa di inizializzazione
-	 * e riceve il suo ID.
-	 * @param type stringa di inizializzazione
-	 * @return ID id del client
-	 * @throws IOException eccezione di IO
-	 */
-	public String firstConnectionToServer(String type) throws IOException {
+	public String getIdFromServer(String type) throws IOException {
 		out.println(type);
 		return in.readLine();
 	}
 	
-	@Override
-	public void run() {
-		try {
-			connectToServer(message);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 }

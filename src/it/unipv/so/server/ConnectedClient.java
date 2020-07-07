@@ -5,11 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
 import it.unipv.so.Services;
+import it.unipv.so.server.operations.Fattoriale;
+import it.unipv.so.server.operations.Fibonacci;
+
 
 public class ConnectedClient extends Thread{
-private Socket socket;
+	private Socket socket;
+	
+	
 	
 	/**
 	 * Il costruttore si occupa solo di istanziare la socket della connessione.
@@ -17,28 +21,35 @@ private Socket socket;
 	 */
 	public ConnectedClient(Socket socket) {
 		this.socket = socket;
+		
 	}
 		
 	@Override
 	public void run() {
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			
-			String vmMessage = in.readLine();
-			if(vmMessage.equals("FATTORIALE")) System.out.println(fattoriale(3));
-			else System.out.println("non posso fare nulla");
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);			
+		
+				
+				String message = in.readLine();
+				if (message != null) { //se il messaggio ricevuto è nullo non fa niente e chiude la socket
+					String[] msgParts = message.split("/");
+					Services s=Services.valueOf(msgParts[0]);
+					int limit=Integer.parseInt(msgParts[1]);
+					if(s==Services.FATTORIALE) {
+						int result = Fattoriale.fattoriale(limit);
+						out.println(result);
+					}else if(s==Services.FIBONACCI) {
+						String result = Fibonacci.fibb(limit);
+						out.println(result);
+					}
+				}
+				socket.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	public int fattoriale(int x) {
-		  int i;
-		    int f=1;
-		    for(i=1; i<=x; i=i+1) {
-		      f=f*i;
-		    }
-		return f;
-	}
+
 }
