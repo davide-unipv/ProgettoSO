@@ -1,13 +1,14 @@
-package it.unipv.so.server;
+package it.unipv.so.old.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import it.unipv.so.Services;
-import it.unipv.so.server.operations.Fattoriale;
-import it.unipv.so.server.operations.Fibonacci;
+
+import it.unipv.so.old.Services;
+import it.unipv.so.old.server.operations.Fattoriale;
+import it.unipv.so.old.server.operations.Fibonacci;
 
 
 public class ConnectedClient extends Thread{

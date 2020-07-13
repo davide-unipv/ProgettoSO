@@ -1,9 +1,9 @@
-package it.unipv.so.client;
+package it.unipv.so.old.client.copy;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import it.unipv.so.Services;
+import it.unipv.so.old.Services;
 
 public class ClientLauncher {
 

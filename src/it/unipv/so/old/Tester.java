@@ -1,12 +1,12 @@
-package it.unipv.so;
+package it.unipv.so.old;
 
 
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import it.unipv.so.client.Client;
-import it.unipv.so.server.Server;
+import it.unipv.so.old.client.Client;
+import it.unipv.so.old.server.Server;
 
 public class Tester {
 
