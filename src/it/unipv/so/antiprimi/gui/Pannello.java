@@ -45,7 +45,7 @@ public class Pannello extends JPanel {
 		 SwingUtilities.invokeLater(new Runnable() {
 	            public void run() {
 	                 String s=lista.getText();
-	                 Numero n=o
+	                 o.get
 	            }
 	        });
 		

@@ -60,8 +60,7 @@ public class Processor {
      */
     synchronized public void nextAntiPrime(Numero numero) throws InterruptedException {
         while (request != null) {
-            if (request.getValore() == numero.getValore())
-                return;
+            if (request.getValore() == numero.getValore()) return;
             wait();
         }
         request = numero;
@@ -93,6 +92,8 @@ public class Processor {
     /**
      * Used by the threads to communicating back the result of their computation.
      * Each thread has to wait its turn so that no antiprimes are skipped.
+     * @param numero numero calcolato dal thread i-esimo
+     * 
      */
     synchronized public void passResult(Numero numero) throws InterruptedException {
         while (request != null && numero.getValore() != processed + 1)
