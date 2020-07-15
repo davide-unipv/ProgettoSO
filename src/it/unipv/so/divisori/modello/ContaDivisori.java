@@ -1,24 +1,22 @@
-package it.unipv.so.antiprimi.modello;
-
-import java.util.logging.Logger;
+package it.unipv.so.divisori.modello;
 
 /**
- * Independent thread that counts the divisors of numbers.  This class is used by NumberProcessorMT to make parallel
+ * Independent thread that counts the divisors of numbers. This class is used by NumberProcessorMT to make parallel
  * the search for antiprime numbers.
  */
-public class DivisorCounter extends Thread {
+public class ContaDivisori extends Thread {
 
     //private final static Logger LOGGER = Logger.getLogger(DivisorCounter.class.getName());
 
     /**
      * Corresponding number processor.
      */
-    NumberProcessorMT numberProcessor;
+    ProcessaNumeri numberProcessor;
 
     /**
      * Create a new instance for the givev processor.
      */
-    public DivisorCounter(NumberProcessorMT np) {
+    public ContaDivisori(ProcessaNumeri np) {
         numberProcessor = np;
     }
 
@@ -33,13 +31,25 @@ public class DivisorCounter extends Thread {
                 long n = numberProcessor.nextNumberToProcess();
                 //LOGGER.info(currentThread().getName() + " start to process " + n);
                 System.out.println(currentThread().getName()+ " inizio calcolo "+ n);
-                long d = AntiPrimes.countDivisors(n);
+                long d = countDivisors(n);
                 //LOGGER.info(currentThread().getName() + " found that " + n + " has " + d + " divisors");
                 System.out.println(currentThread().getName() + " ha trovato " + n + " con " + d + " divisori");
-                numberProcessor.passResult(new Number(n, d));
+                numberProcessor.passResult(new Numero(n, d));
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
+        
+    /**
+     * Count how many integers exactly divide n.
+     */
+    private static long countDivisors(long n) {
+        long c = 1;
+        for (long i = 2; i <= n; i++)
+            if (n % i == 0)
+                c++;
+        return c;
+    }
+    
 }

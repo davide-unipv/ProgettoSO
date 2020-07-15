@@ -1,4 +1,4 @@
-package it.unipv.so.antiprimi.modello;
+package it.unipv.so.divisori.modello;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,17 +7,17 @@ import java.util.List;
 /**
  * Represent the sequence of antiprimes found so far.
  */
-public class AntiPrimesSequence {
+public class Sequenza {
 
     /**
      * The numbers in the sequence.
      */
-    private List<Number> antiPrimes = new ArrayList<>();
+    private List<Numero> antiPrimes = new ArrayList<>();
 
     /**
      * Object which processes the numbers.
      */
-    private NumberProcessorMT processor;
+    private ProcessaNumeri processor;
 
     /**
      * List of objects observing the sequence.
@@ -29,8 +29,8 @@ public class AntiPrimesSequence {
      *
      * @param poolSize numero di thread concorrenti usati per il calcolo.
      */
-    public AntiPrimesSequence(int poolSize) {
-        processor = new NumberProcessorMT(this);
+    public Sequenza(int poolSize) {
+        processor = new ProcessaNumeri(this);
         this.reset();
         processor.startThreads(poolSize);
     }
@@ -38,7 +38,7 @@ public class AntiPrimesSequence {
     /**
      * Create a new sequence with a default number of concurrent threads.
      */
-    public AntiPrimesSequence() {
+    public Sequenza() {
         this(8);
     }
 
@@ -54,13 +54,13 @@ public class AntiPrimesSequence {
      */
     synchronized public void reset() {
         antiPrimes.clear();
-        addAntiPrime(new Number(1, 1));
+        addAntiPrime(new Numero(1, 1));
     }
 
     /**
      * Extend the sequence to include a new antiprime.
      */
-    synchronized public void addAntiPrime(Number number) {
+    synchronized public void addAntiPrime(Numero number) {
         antiPrimes.add(number);
         for (Observer observer : observers)
             observer.update();
@@ -80,7 +80,7 @@ public class AntiPrimesSequence {
     /**
      * Return the last antiprime found.
      */
-    synchronized public Number getLast() {
+    synchronized public Numero getLast() {
         int n = antiPrimes.size();
         return antiPrimes.get(n - 1);
     }
@@ -88,10 +88,7 @@ public class AntiPrimesSequence {
     /**
      * Return the last k antiprimes found.
      */
-    synchronized public List<Number> getLastK(int k) {
-        int n = antiPrimes.size();
-        if (k > n)
-            k = n;
-        return antiPrimes.subList(n - k, n);
+    synchronized public List<Numero> getAll() {
+        return antiPrimes;
     }
 }

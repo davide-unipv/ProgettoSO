@@ -1,4 +1,4 @@
-package it.unipv.so.antiprimi.modello;
+package it.unipv.so.divisori.modello;
 
 
 import java.util.logging.Logger;
@@ -13,14 +13,14 @@ import java.util.logging.Logger;
  * divisor than 'request' is found it is signaled as antiprime to the sequence object. At that point the search is
  * terminated.
  */
-public class NumberProcessorMT {
+public class ProcessaNumeri {
 
-    private final static Logger LOGGER = Logger.getLogger(NumberProcessorMT.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(ProcessaNumeri.class.getName());
 
     /**
      * The antiprime of which the successor must be computed.
      */
-    private Number request;
+    private Numero request;
 
     /**
      * The next number that need to be evaluated.
@@ -35,12 +35,12 @@ public class NumberProcessorMT {
     /**
      * The sequence of antiprimes that is extended by the processor.
      */
-    private AntiPrimesSequence sequence;
+    private Sequenza sequence;
 
     /**
      * Create a new processor for the given sequence of antiprimes.
      */
-    public NumberProcessorMT(AntiPrimesSequence sequence) {
+    public ProcessaNumeri(Sequenza sequence) {
         this.sequence = sequence;
     }
 
@@ -49,7 +49,7 @@ public class NumberProcessorMT {
      */
     public void startThreads(int poolSize) {
         for (int i = 0; i < poolSize; i++)
-            new DivisorCounter(this).start();
+            new ContaDivisori(this).start();
     }
 
     /**
@@ -58,7 +58,7 @@ public class NumberProcessorMT {
      * If the processor is busy the caller will block until the processor can receive the request.
      * The method will return without waiting the end of the computation.
      */
-    synchronized public void nextAntiPrime(Number n) throws InterruptedException {
+    synchronized public void nextAntiPrime(Numero n) throws InterruptedException {
         while (request != null) {
             if (request.getValue() == n.getValue())
                 return;
@@ -94,7 +94,7 @@ public class NumberProcessorMT {
      * Used by the threads to communicating back the result of their computation.
      * Each thread has to wait its turn so that no antiprimes are skipped.
      */
-    synchronized public void passResult(Number number) throws InterruptedException {
+    synchronized public void passResult(Numero number) throws InterruptedException {
         while (request != null && number.getValue() != processed + 1)
             wait();
         if (request == null)

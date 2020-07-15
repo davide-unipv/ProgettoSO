@@ -1,4 +1,4 @@
-package it.unipv.so.antiprimi.modello;
+package it.unipv.so.divisori.modello;
 
 /**
  * Interface for objects that want to be notified when a AntiPrimesSequence changes.

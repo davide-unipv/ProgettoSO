@@ -1,8 +1,8 @@
-package it.unipv.so.antiprimi.modello;
+package it.unipv.so.divisori.modello;
 /**
  * A number whose divisors have been counted.
  */
-public class Number {
+public class Numero {
     private long value;
     private long divisors;
 
@@ -12,7 +12,7 @@ public class Number {
      * @param value the number itself
      * @param divisors the number of its divisors
      */
-    public Number(long value, long divisors) {
+    public Numero(long value, long divisors) {
         this.value = value;
         this.divisors = divisors;
     }
