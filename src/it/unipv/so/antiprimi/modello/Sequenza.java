@@ -10,7 +10,7 @@ import it.unipv.so.antiprimi.gui.MainWindow;
 /**
  * Represent the sequence of antiprimes found so far.
  */
-public class Sequenza extends Observable{
+public class Sequenza {
 
     /**
      * The numbers in the sequence.
@@ -21,7 +21,7 @@ public class Sequenza extends Observable{
      * Object which processes the numbers.
      */
     private Processor processor;
-
+    private List<Observer> observers = new ArrayList<>();
 
     /**
      * Create a new sequence containing only the first antiprime (the number '1').
@@ -60,8 +60,9 @@ public class Sequenza extends Observable{
      * Extend the sequence to include a new antiprime.
      */
     synchronized public void addAntiPrime(Numero numero) {
-        antiPrimes.add(numero);
-        this.notifyObservers();
+    	antiPrimes.add(numero);
+        for (Observer observer : observers)
+            observer.update();
     }
 
     /**

@@ -1,15 +1,16 @@
 package it.unipv.so.antiprimi.gui;
 
 
+
 import javax.swing.*;
 
 import it.unipv.so.antiprimi.modello.Numero;
+import it.unipv.so.antiprimi.modello.Observer;
 import it.unipv.so.antiprimi.modello.Sequenza;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
 
 /**
@@ -17,19 +18,40 @@ import java.util.Observer;
  */
 public class MainWindow extends JFrame implements Observer {
 
+    Sequenza sequence;
     DefaultListModel display = new DefaultListModel();
-    Pannello p;
+
     private static final int SHOW_LAST = 5;
 
-    public MainWindow() {
-        
-        setTitle("Antiprimi");
-        p=new Pannello();
-        add(p);
-        setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-     
-        /*getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
+    /**
+     * Build a window tied to the given sequence of antinumbers.
+     */
+    public MainWindow(Sequenza sequence) {
+        this.sequence = sequence;
+        setTitle("Antiprimes");
+
+        JScrollPane list = new JScrollPane(new JList(display));
+        JButton nextBtn = new JButton("Next");
+        JButton resetBtn = new JButton("Reset");
+        updateDisplay();
+
+        nextBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                sequence.computeNext();
+                // updateDisplay();
+            }
+        });
+
+        resetBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                sequence.reset();
+                // updateDisplay();
+            }
+        });
+
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
         JLabel label = new JLabel("Last antiprimes found");
         label.setAlignmentX(Container.LEFT_ALIGNMENT);
         list.setAlignmentX(Container.LEFT_ALIGNMENT);
@@ -45,19 +67,23 @@ public class MainWindow extends JFrame implements Observer {
         pack();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        */
     }
 
-    public JButton getNext() {
-		return p.getNext();
-	}
-	public JButton getReset() {
-		return p.getReset();
-	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		p.updateDisplay(o);
-		
-	}
+    /**
+     * Change the list showing the last antiprimes found so far.
+     */
+    private void updateDisplay() {
+        display.clear();
+        for (Numero n : sequence.getLastK(SHOW_LAST))
+            display.add(0, "" + n.getValore() + " (" + n.getDivisori() + ")");
+    }
+
+    @Override
+    public void update() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                updateDisplay();
+            }
+        });
+    }
 }
