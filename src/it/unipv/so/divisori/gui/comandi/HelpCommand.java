@@ -4,24 +4,27 @@ package it.unipv.so.divisori.gui.comandi;
 import it.unipv.so.divisori.modello.Sequenza;
 
 /**
- * Comando che permette di visualizzare tutta la lista dei comandi
- * disponibili, con una breve descrizione.
+ * Il comando permette di visualizzare i comandi disponibili, con una breve descrizione.
  *
  */
 public class HelpCommand implements ICommand {
 
 	@Override
 	public String execute(Sequenza s) {
-		String helpResult;
-		helpResult = buildHelpResult();
-		return helpResult;
+		String help;
+		help = CostruisciStriga();
+		return help;
 	}
-
-	private String buildHelpResult() {
+	/**
+	 * Metodo di supporto per costruire la stringa
+	 * @return stringa da visualizzare sul prompt
+	 * 
+	 */
+	private String CostruisciStriga() {
 		StringBuilder helpResultBuilder = new StringBuilder("I comandi disponibili sono i seguenti:\n");
-		helpResultBuilder.append("next -> calcola nuovo \n");
-		helpResultBuilder.append("reset -> reset \n");
-		helpResultBuilder.append("stop -> Termina il programma.\n");
+		helpResultBuilder.append("next -> Calcola il prossimo numero \n");
+		helpResultBuilder.append("reset -> Reset \n");
+		helpResultBuilder.append("stop -> Termina il programma \n");
 		return helpResultBuilder.toString();
 	}
 

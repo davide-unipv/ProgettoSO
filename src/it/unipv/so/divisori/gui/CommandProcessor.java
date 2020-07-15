@@ -25,7 +25,9 @@ public class CommandProcessor {
 	 * il relativo comando.
 	 * @param commandln la riga di comando 
 	 * @return result il risultato del comando
+	 * 
 	 */
+	@SuppressWarnings("unused")
 	public String processCommand(String commandln) {
 		String[] commandSplit = commandln.split(" ");
 	    String command = commandSplit[0].trim();
@@ -45,7 +47,6 @@ public class CommandProcessor {
 	    }else {
 	    	result = "Comando non trovato";
 	    }
-	    
 	    return result;
 	}
 	

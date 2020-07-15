@@ -4,13 +4,15 @@ import javax.swing.SwingUtilities;
 
 import it.unipv.so.divisori.gui.Terminal;
 import it.unipv.so.divisori.modello.Sequenza;
-
+/**
+ * La classe serve per inizializzare le varibili e lanciare il programma.
+ * */
 public class Launcher {
+	@SuppressWarnings("unused")
 	private Sequenza sequence;
-   
-
+	
     /**
-     * Launch the program.
+     * Lancia il programma.
      */
     public static void main(String[] args) {
         Sequenza sequence = new Sequenza(8);

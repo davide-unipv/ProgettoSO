@@ -1,7 +1,7 @@
 package it.unipv.so.divisori.gui;
 
 /**
- * Classe con la lista di tutti i comandi ammessi dall'interfaccia testuale.
+ * Classe con la lista di tutti i comandi ammessi dal prompt.
  *
  */
 public class Commands {

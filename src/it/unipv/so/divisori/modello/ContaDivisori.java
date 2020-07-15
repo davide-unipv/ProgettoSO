@@ -36,6 +36,8 @@ public class ContaDivisori extends Thread {
         
     /**
      * Contatore di divisori
+     * @param n numero di cui dobbiamo contare i divisori
+     * @return numero dei divisori dell'argomento
      */
     private static long countDivisors(long n) {
         long c = 1;

@@ -26,6 +26,7 @@ public class Numero {
 
     /**
      * Quanti divisori ho attualmente
+     * 
      */
     public long getDivisors() {
         return divisors;

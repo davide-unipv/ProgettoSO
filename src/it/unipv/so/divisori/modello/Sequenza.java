@@ -5,69 +5,66 @@ import java.util.List;
 
 
 /**
- * Represent the sequence of antiprimes found so far.
+ * Rappresenta la sequenza di numeri trovati fino ad ora. 
+ * La classe ha due costruttori.
+ * 
  */
 public class Sequenza {
 
-    /**
-     * The numbers in the sequence.
-     */
-    private List<Numero> antiPrimes = new ArrayList<>();
-
-    /**
-     * Object which processes the numbers.
-     */
+    private List<Numero> numeri = new ArrayList<>();
     private ProcessaNumeri processor;
-
-    /**
-     * List of objects observing the sequence.
-     */
     private List<Observer> observers = new ArrayList<>();
 
     /**
-     * Create a new sequence containing only the first antiprime (the number '1').
-     *
-     * @param poolSize numero di thread concorrenti usati per il calcolo.
+     * Crea una nuova sequenza contenente solamente il primo numero (ovvero il numero '1').
+     * @param numeroThread numero di thread concorrenti usati per il calcolo.
+     * 
      */
-    public Sequenza(int poolSize) {
+    public Sequenza(int numeroThread) {
         processor = new ProcessaNumeri(this);
         this.reset();
-        processor.startThreads(poolSize);
+        processor.startThreads(numeroThread);
     }
 
     /**
-     * Create a new sequence with a default number of concurrent threads.
+     * Crea una nuova sequenza con un numero prestabilito di thread (8).
+     * 
      */
     public Sequenza() {
         this(8);
     }
 
     /**
-     * Register a new observer.
+     * Registra un nuovo observer.
+     * @param observer oggetto che implementa l'interfaccia Observer
      */
     public void addObserver(Observer observer) {
         observers.add(observer);
     }
 
     /**
-     * Clear the sequence so that it contains only the first antiprime (the number '1').
+     * Inizializza la sequenza dei numeri, inserendo solo il primo numero (il numero '1').
      */
     synchronized public void reset() {
-        antiPrimes.clear();
-        addAntiPrime(new Numero(1, 1));
+    	numeri.clear();
+        AddNumber(new Numero(1, 1));
     }
 
     /**
-     * Extend the sequence to include a new antiprime.
+     * Estende la sequenza dei numeri aggiungendo il nuovo numero 
+     * alla lista e notifica gli observer.
+     * @param number numero da aggiungere alla lista
      */
-    synchronized public void addAntiPrime(Numero number) {
-        antiPrimes.add(number);
+    synchronized public void AddNumber(Numero number) {
+    	numeri.add(number);
         for (Observer observer : observers)
             observer.update();
     }
 
     /**
-     * Find a new antiprime and add it to the sequence.
+     * Il metodo permette di avviare il calcolo di nuovo numero. 
+     * Il metodo e' chiamato dal prompt attraverso il comando 'next'
+     *
      */
     public void computeNext() {
         try {
@@ -78,17 +75,20 @@ public class Sequenza {
     }
 
     /**
-     * Return the last antiprime found.
+     * Restituisce l'ultimo numero trovato.
+     * @return l'ultimo elemento aggiunto alla lista
+     * 
      */
     synchronized public Numero getLast() {
-        int n = antiPrimes.size();
-        return antiPrimes.get(n - 1);
+        int n = numeri.size();
+        return numeri.get(n - 1);
     }
 
     /**
-     * Return the last k antiprimes found.
+     * Restituisce tutta la lista.
+     * @return l'intera lista dei numeri
      */
     synchronized public List<Numero> getAll() {
-        return antiPrimes;
+        return numeri;
     }
 }

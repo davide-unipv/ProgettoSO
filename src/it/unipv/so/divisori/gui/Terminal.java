@@ -21,6 +21,7 @@ import it.unipv.so.divisori.modello.Sequenza;
  * JFrame che contiene una JTextArea che permette di simulare
  * il comportamento di un terminale.
  *
+ *
  */
 @SuppressWarnings("serial")
 public class Terminal extends JFrame implements Observer{
@@ -78,7 +79,7 @@ public class Terminal extends JFrame implements Observer{
 	
 	/**
 	 * Restituisce l'ultima linea dell'area di testo.
-	 * @return command il comando inserito
+	 * @return il comando inserito
 	 */
 	private String getCommand() {
 		String[] lines = commandLine.getText().split("\n");
@@ -87,6 +88,7 @@ public class Terminal extends JFrame implements Observer{
 	
 	/**
 	 * Inserisce il carattere '$' nell'area di testo.
+	 * 
 	 */
 	private void setPrompt() {
 		commandLine.append("$ ");
@@ -99,17 +101,26 @@ public class Terminal extends JFrame implements Observer{
 	private void print(String string) {
 		commandLine.append(string);
 	}
-	
+	/**
+	 * Stampa nell'area di testo una stringa di inizializzazione predefinita.
+	 * 
+	 */
 	private void setInitString() {
 		commandLine.append("Utilizzare il comando 'help' per informazioni\n");
 	}
-	
+	/**
+	 * Restituisce la JTextArea
+	 * @return la JTextArea
+	 */
 	public JTextArea getCommandLine() {
 		return commandLine;
 	}
-
 	
-	private void updateDisplay() {
+	/**
+	 * Stampa sul prompt la nuova lista dei numeri insieme al nuovo prompt
+	 * 
+	 */
+	private void updatePrompt() {
 		String s = "";
 		commandLine.setText("");
 		setInitString();
@@ -119,11 +130,12 @@ public class Terminal extends JFrame implements Observer{
 		print(s);
 		setPrompt();
 	}
+	
 	@Override
 	public void update() {
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                updateDisplay();
+            	updatePrompt();
             }
         });
 		

@@ -14,6 +14,7 @@ public interface ICommand {
 	 * Esegue le azioni effettive del comando.
 	 * @param s istanza della classe Sequenza
 	 * @return result risultato del comando
+	 * 
 	 */
 	String execute(Sequenza s);
 	

@@ -1,17 +1,15 @@
 package it.unipv.so.divisori.modello;
 
 
-import java.util.logging.Logger;
-
 /**
- * Classe che sfrutta il multithreading per cercare numeri in background
+ * Classe che sfrutta il multithreading per cercare numeri in background.
  *
  * La richiesta è in request. Dopo ogni richiesta di 'toProcess' viene valutato il numero successivo. 
  *
  */
 public class ProcessaNumeri {
 
-    private final static Logger LOGGER = Logger.getLogger(ProcessaNumeri.class.getName());
+    //private final static Logger LOGGER = Logger.getLogger(ProcessaNumeri.class.getName());
 
     /**
      * Il successivo dell'attuale che deve essere calcolato
@@ -94,7 +92,7 @@ public class ProcessaNumeri {
         if (number.getDivisors() > request.getDivisors()) {
             // A new antiprime has been found!
             processed++;
-            sequence.addAntiPrime(number);
+            sequence.AddNumber(number);
             acceptRequests();
         } else if (number.getValue() == processed + 1) {
             processed++;

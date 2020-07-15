@@ -10,21 +10,21 @@ import it.unipv.so.divisori.modello.Sequenza;
  */
 public class CommandExecutor {
 	
-	private Sequenza vendingMachine;
-
+	private Sequenza sequenza;
+	/**
+	 * Costruttore della classe CommandExecutor
+	 */
 	public CommandExecutor(Sequenza s) {
-		vendingMachine = s;
+		sequenza = s;
 	}
 	
 	/**
-	 * Esegue il comando passato come parametro con gli argomenti, anch'essi
-	 * ricevuti dal chiamante.
+	 * Esegue il comando passato come parametro.
 	 * @param command comando da eseguire
-	 * @param args argomenti del comando
 	 * @return result risultato del comando
 	 */
 	public String executeCommand(ICommand command) {
-        return command.execute(vendingMachine);
+        return command.execute(sequenza);
     }
 
 }

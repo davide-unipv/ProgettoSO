@@ -1,12 +1,14 @@
 package it.unipv.so.divisori.modello;
 
 /**
- * Interface for objects that want to be notified when a AntiPrimesSequence changes.
+ * Interfaccia per gli oggetti che vogliono essere 
+ * notificati quando un nuovo numero e' stato trovato.
+ * 
  */
 public interface Observer {
 
     /**
-     * Notify the observer that the sequence changed.
+     * Notifica gli osservatori che qualcosa è cambiato.
      */
     void update();
 }
