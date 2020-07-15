@@ -1,12 +1,11 @@
 package it.unipv.so.antiprimi.gui;
 
 
-
 import javax.swing.*;
 
-import it.unipv.so.antiprimi.modello.Numero;
-import it.unipv.so.antiprimi.modello.Observer;
-import it.unipv.so.antiprimi.modello.Sequenza;
+
+import it.unipv.so.antiprimi.modello.*;
+import it.unipv.so.antiprimi.modello.Number;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +17,7 @@ import java.awt.event.ActionListener;
  */
 public class MainWindow extends JFrame implements Observer {
 
-    Sequenza sequence;
+    AntiPrimesSequence sequence;
     DefaultListModel display = new DefaultListModel();
 
     private static final int SHOW_LAST = 5;
@@ -26,7 +25,7 @@ public class MainWindow extends JFrame implements Observer {
     /**
      * Build a window tied to the given sequence of antinumbers.
      */
-    public MainWindow(Sequenza sequence) {
+    public MainWindow(AntiPrimesSequence sequence) {
         this.sequence = sequence;
         setTitle("Antiprimes");
 
@@ -74,8 +73,8 @@ public class MainWindow extends JFrame implements Observer {
      */
     private void updateDisplay() {
         display.clear();
-        for (Numero n : sequence.getLastK(SHOW_LAST))
-            display.add(0, "" + n.getValore() + " (" + n.getDivisori() + ")");
+        for (Number n : sequence.getLastK(SHOW_LAST))
+            display.add(0, "" + n.getValue() + " (" + n.getDivisors() + ")");
     }
 
     @Override

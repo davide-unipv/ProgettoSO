@@ -2,25 +2,26 @@ package it.unipv.so.antiprimi.modello;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-
-import it.unipv.so.antiprimi.gui.MainWindow;
 
 
 /**
  * Represent the sequence of antiprimes found so far.
  */
-public class Sequenza {
+public class AntiPrimesSequence {
 
     /**
      * The numbers in the sequence.
      */
-    private List<Numero> antiPrimes = new ArrayList<>();
+    private List<Number> antiPrimes = new ArrayList<>();
 
     /**
      * Object which processes the numbers.
      */
-    private Processor processor;
+    private NumberProcessorMT processor;
+
+    /**
+     * List of objects observing the sequence.
+     */
     private List<Observer> observers = new ArrayList<>();
 
     /**
@@ -28,8 +29,8 @@ public class Sequenza {
      *
      * @param poolSize numero di thread concorrenti usati per il calcolo.
      */
-    public Sequenza(int poolSize) {
-        processor = new Processor(this);
+    public AntiPrimesSequence(int poolSize) {
+        processor = new NumberProcessorMT(this);
         this.reset();
         processor.startThreads(poolSize);
     }
@@ -37,15 +38,15 @@ public class Sequenza {
     /**
      * Create a new sequence with a default number of concurrent threads.
      */
-    public Sequenza() {
+    public AntiPrimesSequence() {
         this(8);
     }
 
     /**
      * Register a new observer.
      */
-    public void addObserver(MainWindow observer) {
-    	this.addObserver(observer);
+    public void addObserver(Observer observer) {
+        observers.add(observer);
     }
 
     /**
@@ -53,14 +54,14 @@ public class Sequenza {
      */
     synchronized public void reset() {
         antiPrimes.clear();
-        addAntiPrime(new Numero(1, 1));
+        addAntiPrime(new Number(1, 1));
     }
 
     /**
      * Extend the sequence to include a new antiprime.
      */
-    synchronized public void addAntiPrime(Numero numero) {
-    	antiPrimes.add(numero);
+    synchronized public void addAntiPrime(Number number) {
+        antiPrimes.add(number);
         for (Observer observer : observers)
             observer.update();
     }
@@ -79,7 +80,7 @@ public class Sequenza {
     /**
      * Return the last antiprime found.
      */
-    synchronized public Numero getLast() {
+    synchronized public Number getLast() {
         int n = antiPrimes.size();
         return antiPrimes.get(n - 1);
     }
@@ -87,7 +88,7 @@ public class Sequenza {
     /**
      * Return the last k antiprimes found.
      */
-    synchronized public List<Numero> getLastK(int k) {
+    synchronized public List<Number> getLastK(int k) {
         int n = antiPrimes.size();
         if (k > n)
             k = n;

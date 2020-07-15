@@ -6,19 +6,19 @@ import java.util.logging.Logger;
  * Independent thread that counts the divisors of numbers.  This class is used by NumberProcessorMT to make parallel
  * the search for antiprime numbers.
  */
-public class ContaDivisori extends Thread {
+public class DivisorCounter extends Thread {
 
     //private final static Logger LOGGER = Logger.getLogger(DivisorCounter.class.getName());
 
     /**
      * Corresponding number processor.
      */
-    Processor numberProcessor;
+    NumberProcessorMT numberProcessor;
 
     /**
      * Create a new instance for the givev processor.
      */
-    public ContaDivisori(Processor np) {
+    public DivisorCounter(NumberProcessorMT np) {
         numberProcessor = np;
     }
 
@@ -33,10 +33,10 @@ public class ContaDivisori extends Thread {
                 long n = numberProcessor.nextNumberToProcess();
                 //LOGGER.info(currentThread().getName() + " start to process " + n);
                 System.out.println(currentThread().getName()+ " inizio calcolo "+ n);
-                long d = Antiprimo.countDivisors(n);
+                long d = AntiPrimes.countDivisors(n);
                 //LOGGER.info(currentThread().getName() + " found that " + n + " has " + d + " divisors");
                 System.out.println(currentThread().getName() + " ha trovato " + n + " con " + d + " divisori");
-                numberProcessor.passResult(new Numero(n, d));
+                numberProcessor.passResult(new Number(n, d));
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }

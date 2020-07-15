@@ -13,14 +13,14 @@ import java.util.logging.Logger;
  * divisor than 'request' is found it is signaled as antiprime to the sequence object. At that point the search is
  * terminated.
  */
-public class Processor {
+public class NumberProcessorMT {
 
-    private final static Logger LOGGER = Logger.getLogger(Processor.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(NumberProcessorMT.class.getName());
 
     /**
      * The antiprime of which the successor must be computed.
      */
-    private Numero request;
+    private Number request;
 
     /**
      * The next number that need to be evaluated.
@@ -35,12 +35,12 @@ public class Processor {
     /**
      * The sequence of antiprimes that is extended by the processor.
      */
-    private Sequenza sequence;
+    private AntiPrimesSequence sequence;
 
     /**
      * Create a new processor for the given sequence of antiprimes.
      */
-    public Processor(Sequenza sequence) {
+    public NumberProcessorMT(AntiPrimesSequence sequence) {
         this.sequence = sequence;
     }
 
@@ -49,7 +49,7 @@ public class Processor {
      */
     public void startThreads(int poolSize) {
         for (int i = 0; i < poolSize; i++)
-            new ContaDivisori(this).start();
+            new DivisorCounter(this).start();
     }
 
     /**
@@ -58,15 +58,16 @@ public class Processor {
      * If the processor is busy the caller will block until the processor can receive the request.
      * The method will return without waiting the end of the computation.
      */
-    synchronized public void nextAntiPrime(Numero numero) throws InterruptedException {
+    synchronized public void nextAntiPrime(Number n) throws InterruptedException {
         while (request != null) {
-            if (request.getValore() == numero.getValore()) return;
+            if (request.getValue() == n.getValue())
+                return;
             wait();
         }
-        request = numero;
-        processed = request.getValore();
-        toProcess = request.getValore() + 1;
-        System.out.println("\n\nRichiesta di calcolare " + numero.getValore());
+        request = n;
+        processed = request.getValue();
+        toProcess = request.getValue() + 1;
+        System.out.println("\n\nRichiesta di calcolare " + n.getValue());
         //LOGGER.info("Asked to find the successor of " + n.getValue());
         notifyAll();
     }
@@ -92,20 +93,18 @@ public class Processor {
     /**
      * Used by the threads to communicating back the result of their computation.
      * Each thread has to wait its turn so that no antiprimes are skipped.
-     * @param numero numero calcolato dal thread i-esimo
-     * 
      */
-    synchronized public void passResult(Numero numero) throws InterruptedException {
-        while (request != null && numero.getValore() != processed + 1)
+    synchronized public void passResult(Number number) throws InterruptedException {
+        while (request != null && number.getValue() != processed + 1)
             wait();
         if (request == null)
             return;
-        if (numero.getDivisori() > request.getDivisori()) {
+        if (number.getDivisors() > request.getDivisors()) {
             // A new antiprime has been found!
             processed++;
-            sequence.addAntiPrime(numero);
+            sequence.addAntiPrime(number);
             acceptRequests();
-        } else if (numero.getValore() == processed + 1) {
+        } else if (number.getValue() == processed + 1) {
             processed++;
             notifyAll();
         }

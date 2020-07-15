@@ -1,20 +1,22 @@
 package it.unipv.so.antiprimi.modello;
 
+
 /**
  * Class containing auxiliary methods for the computation of antiprime numbers.
  */
-public class Antiprimo {
-	 /**
+public class AntiPrimes {
+
+    /**
      * Return the smallest number greater than ap having more divisors than ap itself.
      */
-    static public Numero nextAntiPrimeAfter(Numero ap) {
-        long n = ap.getValore();
+    static public Number nextAntiPrimeAfter(Number ap) {
+        long n = ap.getValue();
         long divisors;
         do {
             n++;
             divisors = countDivisors(n);
-        } while (divisors <= ap.getDivisori());
-        return new Numero(n, divisors);
+        } while (divisors <= ap.getDivisors());
+        return new Number(n, divisors);
     }
 
     /**
@@ -27,6 +29,4 @@ public class Antiprimo {
                 c++;
         return c;
     }
-	}
-
-
+}
