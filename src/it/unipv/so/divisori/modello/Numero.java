@@ -1,16 +1,16 @@
 package it.unipv.so.divisori.modello;
 /**
- * A number whose divisors have been counted.
+ * Numero di cui sono stati contati i divisori
  */
 public class Numero {
     private long value;
     private long divisors;
 
     /**
-     * Create a new number.
+     * Crea un nuovo numero.
      *
-     * @param value the number itself
-     * @param divisors the number of its divisors
+     * @param valore
+     * @param numero di divisori
      */
     public Numero(long value, long divisors) {
         this.value = value;
@@ -18,14 +18,14 @@ public class Numero {
     }
 
     /**
-     * Return the actual value of the number.
+     * Valore dell'attuale numero
      */
     public long getValue() {
         return value;
     }
 
     /**
-     * Return how many integers divide the number.
+     * Quanti divisori ho attualmente
      */
     public long getDivisors() {
         return divisors;

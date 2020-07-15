@@ -1,27 +1,20 @@
 package it.unipv.so.divisori.modello;
 
 /**
- * Independent thread that counts the divisors of numbers. This class is used by NumberProcessorMT to make parallel
- * the search for antiprime numbers.
+ * Conta i divisori di un numero e mostra il numero con una quantità di divisori superiore a quello attualmente mostrato
  */
 public class ContaDivisori extends Thread {
 
     //private final static Logger LOGGER = Logger.getLogger(DivisorCounter.class.getName());
 
-    /**
-     * Corresponding number processor.
-     */
     ProcessaNumeri numberProcessor;
 
-    /**
-     * Create a new instance for the givev processor.
-     */
     public ContaDivisori(ProcessaNumeri np) {
         numberProcessor = np;
     }
 
     /**
-     * Thread body.
+     * Corpo del thread
      */
     public void run() {
         for (;;) {
@@ -42,7 +35,7 @@ public class ContaDivisori extends Thread {
     }
         
     /**
-     * Count how many integers exactly divide n.
+     * Contatore di divisori
      */
     private static long countDivisors(long n) {
         long c = 1;

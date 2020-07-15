@@ -4,48 +4,42 @@ package it.unipv.so.divisori.modello;
 import java.util.logging.Logger;
 
 /**
- * Class representing an obejct using multiple threads to searche antiprime numbers in background.
+ * Classe che sfrutta il multithreading per cercare numeri in background
  *
- * A request is stored in the 'request' member.  After each request 'toProcess' is initilized to the next integer to
- * evaluate as possible antiprime.  Similarly, 'processed' is set to the last number already analyzed.
+ * La richiesta è in request. Dopo ogni richiesta di 'toProcess' viene valutato il numero successivo. 
  *
- * Multiple threads ask number to process and return asynchronously its count of divisors.  When a number with more
- * divisor than 'request' is found it is signaled as antiprime to the sequence object. At that point the search is
- * terminated.
  */
 public class ProcessaNumeri {
 
     private final static Logger LOGGER = Logger.getLogger(ProcessaNumeri.class.getName());
 
     /**
-     * The antiprime of which the successor must be computed.
+     * Il successivo dell'attuale che deve essere calcolato
      */
     private Numero request;
 
     /**
-     * The next number that need to be evaluated.
+     * Prossimo numero che va valutato
      */
     private long toProcess;
 
     /**
-     * The last number that has been evaluated.
+     * Ultimo numero valutato
      */
     private long processed;
 
     /**
-     * The sequence of antiprimes that is extended by the processor.
+     * Sequenza di numeri calcolati
      */
     private Sequenza sequence;
 
-    /**
-     * Create a new processor for the given sequence of antiprimes.
-     */
+
     public ProcessaNumeri(Sequenza sequence) {
         this.sequence = sequence;
     }
 
     /**
-     * Start the computing threads whose number is given by 'poolSize'.
+     * Inizia il calcolo con il numero di thread precisato
      */
     public void startThreads(int poolSize) {
         for (int i = 0; i < poolSize; i++)
@@ -53,10 +47,9 @@ public class ProcessaNumeri {
     }
 
     /**
-     * Ask the processor to compute the successor of n in the antiprime sequence.
+     * Chiede di processare il successivo
      *
-     * If the processor is busy the caller will block until the processor can receive the request.
-     * The method will return without waiting the end of the computation.
+     * Se processor è bloccato, verrà interrotta la richiesta
      */
     synchronized public void nextAntiPrime(Numero n) throws InterruptedException {
         while (request != null) {
@@ -73,7 +66,7 @@ public class ProcessaNumeri {
     }
 
     /**
-     * Make the processor ready for new computations.
+     * Libera il processor
      */
     synchronized private void acceptRequests() {
         request = null;
@@ -81,8 +74,8 @@ public class ProcessaNumeri {
     }
 
     /**
-     * Used by the threads to obtain a number to process.
-     * If no processing is needed then the thread is blocked.
+     * Usato per avere un numero da processare
+     * Se non c'è nulla da processare, il thread viene bloccato
      */
     synchronized public long nextNumberToProcess() throws InterruptedException {
         while (request == null)
@@ -91,8 +84,7 @@ public class ProcessaNumeri {
     }
 
     /**
-     * Used by the threads to communicating back the result of their computation.
-     * Each thread has to wait its turn so that no antiprimes are skipped.
+     * Qui i thread comunicano il risultato
      */
     synchronized public void passResult(Numero number) throws InterruptedException {
         while (request != null && number.getValue() != processed + 1)
