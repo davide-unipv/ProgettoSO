@@ -1,8 +1,7 @@
 package it.unipv.so.divisori.modello;
 
 /**
- * La classe ha il compito di contare i divisori di un numero dato e il numero 
- * con una quantita' di divisori superiore a quello attualmente mostrato.
+ * La classe implementa il corpo di ogni thread.
  * 
  */
 public class ContaDivisori extends Thread {

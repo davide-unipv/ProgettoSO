@@ -4,7 +4,7 @@ package it.unipv.so.divisori.modello;
 /**
  * Classe che sfrutta il multithreading per cercare numeri in background.
  * La richiesta del numero da cercare è nella variabile 'richiesta'. 
- * Dopo ogni richiesta di 'toProcess' viene valutato il numero successivo. 
+ * Dopo ogni richiesta di 'daProcessare' viene valutato il numero successivo. 
  *
  */
 public class ProcessaNumeri {

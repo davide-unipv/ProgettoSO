@@ -21,10 +21,10 @@ public class HelpCommand implements ICommand {
 	 * 
 	 */
 	private String CostruisciStriga() {
-		StringBuilder helpResultBuilder = new StringBuilder("I comandi disponibili sono i seguenti:\n");
-		helpResultBuilder.append("next -> Calcola il prossimo numero \n");
-		helpResultBuilder.append("reset -> Reset \n");
-		helpResultBuilder.append("stop -> Termina il programma \n");
+		StringBuilder helpResultBuilder = new StringBuilder("I comandi disponibili sono i seguenti.\n");
+		helpResultBuilder.append("next: Calcola il prossimo numero \n");
+		helpResultBuilder.append("reset: Resetta la lista introducendo solo il numero '1' \n");
+		helpResultBuilder.append("stop: Termina il programma \n");
 		return helpResultBuilder.toString();
 	}
 
