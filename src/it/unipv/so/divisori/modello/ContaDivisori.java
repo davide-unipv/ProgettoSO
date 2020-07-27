@@ -9,7 +9,7 @@ public class ContaDivisori extends Thread {
     ProcessaNumeri numberProcessor;
     /**
  	* Costruttore della classe ContaDivisori.
- 	* @param np
+ 	* @param np istanza della classe ProcessaNumeri
  	* 
  	* */
     public ContaDivisori(ProcessaNumeri np) {

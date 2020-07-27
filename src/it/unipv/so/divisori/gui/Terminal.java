@@ -125,7 +125,7 @@ public class Terminal extends JFrame implements Observer{
 		commandLine.setText("");
 		setInitString();
 		for (Numero n : sequence.getAll()) {
-			s+="" + n.getValue() + " (" + n.getDivisors() + ")\n";
+			s+="" + n.getValore() + " (" + n.getDivisori() + ")\n";
 		}
 		print(s);
 		setPrompt();

@@ -5,33 +5,33 @@ package it.unipv.so.divisori.modello;
  * 
  */
 public class Numero {
-    private long value;
-    private long divisors;
+    private long valore;
+    private long divisori;
 
     /**
      * Costruttore della classe Numero. Crea un nuovo numero.
      *
-     * @param valore
-     * @param numero di divisori
+     * @param valore valore effettivo del numero.
+     * @param divisori numero di divisori.
      */
-    public Numero(long value, long divisors) {
-        this.value = value;
-        this.divisors = divisors;
+    public Numero(long valore, long divisori) {
+        this.valore = valore;
+        this.divisori = divisori;
     }
 
     /**
-     * Metodo get del valore
-     * @return valore del numero
+     * Metodo get del valore.
+     * @return valore del numero.
      */
-    public long getValue() {
-        return value;
+    public long getValore() {
+        return valore;
     }
 
     /**
-     * Metodo get del numero dei divisori
-     * @return numero di divisori del numero
+     * Metodo get del numero dei divisori.
+     * @return numero di divisori del numero.
      */
-    public long getDivisors() {
-        return divisors;
+    public long getDivisori() {
+        return divisori;
     }
 }

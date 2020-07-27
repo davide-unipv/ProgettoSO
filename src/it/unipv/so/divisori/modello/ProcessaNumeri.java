@@ -49,18 +49,18 @@ public class ProcessaNumeri {
     /**
      * Il metodo permette di processare il successivo numero. 
      * Se il ProcessaNumeri e' bloccato, verra' interrotta la richiesta.
-     * @param n 
-     * @throws InterruptedException
+     * @param n il numero che viene richiesto.
+     * @throws InterruptedException l'eccezione viene lanciata se l'esecuzione viene interrotta.
      */
     synchronized public void nextNumber(Numero n) throws InterruptedException {
         while (richiesta != null) {
-            if (richiesta.getValue() == n.getValue())	return;
+            if (richiesta.getValore() == n.getValore())	return;
             wait();
         }
         richiesta = n;
-        processato = richiesta.getValue();
-        daProcessare = richiesta.getValue() + 1;
-        System.out.println("\n\nRichiesta di calcolare " + n.getValue());
+        processato = richiesta.getValore();
+        daProcessare = richiesta.getValore() + 1;
+        System.out.println("\n\nRichiesta di calcolare " + n.getValore());
         notifyAll();
     }
 
@@ -76,7 +76,8 @@ public class ProcessaNumeri {
      * Il metodo serve per avere un numero da processare.
      * Se non c'e' nulla da processare, il thread viene bloccato.
      * 
-     * @throws InterruptedException
+     * @throws InterruptedException l'eccezione viene lanciata se l'esecuzione viene interrotta.
+     * @return il prossimo numero da processare.
      */
     synchronized public long nextNumberToProcess() throws InterruptedException {
         while (richiesta == null)	wait();
@@ -85,16 +86,17 @@ public class ProcessaNumeri {
 
     /**
      * Qui i thread comunicano il risultato.
-     * @param n
+     * @param n risultato del thread.
+     * @throws InterruptedException l'eccezione viene lanciata se l'esecuzione viene interrotta.
      */
     synchronized public void passaRisultato(Numero n) throws InterruptedException {
-        while (richiesta != null && n.getValue() != processato + 1)	wait();
+        while (richiesta != null && n.getValore() != processato + 1)	wait();
         if (richiesta == null)	return;
-        if (n.getDivisors() > richiesta.getDivisors()) {
+        if (n.getDivisori() > richiesta.getDivisori()) {
             processato++;
             sequenza.aggiungiNumero(n);
             acceptRequests();
-        } else if (n.getValue() == processato + 1) {
+        } else if (n.getValore() == processato + 1) {
             processato++;
             notifyAll();
         }
