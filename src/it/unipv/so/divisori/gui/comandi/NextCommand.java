@@ -9,7 +9,7 @@ public class NextCommand implements ICommand{
 
 	@Override
 	public String execute(Sequenza s) {
-		s.computeNext();
+		s.calcolaSuccessivo();
 		return null;
 	}
 

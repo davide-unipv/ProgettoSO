@@ -1,33 +1,34 @@
 package it.unipv.so.divisori.modello;
 
 /**
- * Conta i divisori di un numero e mostra il numero con una quantità di divisori superiore a quello attualmente mostrato
+ * La classe ha il compito di contare i divisori di un numero dato e il numero 
+ * con una quantita' di divisori superiore a quello attualmente mostrato.
+ * 
  */
 public class ContaDivisori extends Thread {
 
-    //private final static Logger LOGGER = Logger.getLogger(DivisorCounter.class.getName());
-
     ProcessaNumeri numberProcessor;
-
+    /**
+ 	* Costruttore della classe ContaDivisori.
+ 	* @param np
+ 	* 
+ 	* */
     public ContaDivisori(ProcessaNumeri np) {
         numberProcessor = np;
     }
-
     /**
-     * Corpo del thread
+     * Azioni che esegue ogni thread.
+     * 
      */
     public void run() {
-        for (;;) {
+        while(true) {
             try {
-                //LOGGER.info(currentThread().getName() + ": ask for a new integer to process");
-                System.out.println(currentThread().getName()+ " richiede un nuovo intero da processare");
+                System.out.println(currentThread().getName()+ " richiede un nuovo numero da processare");
                 long n = numberProcessor.nextNumberToProcess();
-                //LOGGER.info(currentThread().getName() + " start to process " + n);
                 System.out.println(currentThread().getName()+ " inizio calcolo "+ n);
-                long d = countDivisors(n);
-                //LOGGER.info(currentThread().getName() + " found that " + n + " has " + d + " divisors");
+                long d = contaDivisori(n);
                 System.out.println(currentThread().getName() + " ha trovato " + n + " con " + d + " divisori");
-                numberProcessor.passResult(new Numero(n, d));
+                numberProcessor.passaRisultato(new Numero(n, d));
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
@@ -35,11 +36,11 @@ public class ContaDivisori extends Thread {
     }
         
     /**
-     * Contatore di divisori
-     * @param n numero di cui dobbiamo contare i divisori
-     * @return numero dei divisori dell'argomento
+     * Il metodo permette di contare i divisori di un numero.
+     * @param n numero di cui dobbiamo contare i divisori.
+     * @return numero dei divisori dell'argomento.
      */
-    private static long countDivisors(long n) {
+    private static long contaDivisori(long n) {
         long c = 1;
         for (long i = 2; i <= n; i++)
             if (n % i == 0)

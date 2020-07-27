@@ -1,13 +1,15 @@
 package it.unipv.so.divisori.modello;
 /**
- * Numero di cui sono stati contati i divisori
+ * Classe personalizzata che modella un numero. 
+ * Il numero è identificato dal suo valore nominale e dal numero dei suoi divisori.
+ * 
  */
 public class Numero {
     private long value;
     private long divisors;
 
     /**
-     * Crea un nuovo numero.
+     * Costruttore della classe Numero. Crea un nuovo numero.
      *
      * @param valore
      * @param numero di divisori
@@ -18,15 +20,16 @@ public class Numero {
     }
 
     /**
-     * Valore dell'attuale numero
+     * Metodo get del valore
+     * @return valore del numero
      */
     public long getValue() {
         return value;
     }
 
     /**
-     * Quanti divisori ho attualmente
-     * 
+     * Metodo get del numero dei divisori
+     * @return numero di divisori del numero
      */
     public long getDivisors() {
         return divisors;

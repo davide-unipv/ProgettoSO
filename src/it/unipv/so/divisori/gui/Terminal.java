@@ -79,7 +79,7 @@ public class Terminal extends JFrame implements Observer{
 	
 	/**
 	 * Restituisce l'ultima linea dell'area di testo.
-	 * @return il comando inserito
+	 * @return il comando inserito.
 	 */
 	private String getCommand() {
 		String[] lines = commandLine.getText().split("\n");
@@ -96,7 +96,7 @@ public class Terminal extends JFrame implements Observer{
 	
 	/**
 	 * Stampa nell'area di testo la stringa passatagli come parametro.
-	 * @param string testo da stampare
+	 * @param string testo da stampare.
 	 */
 	private void print(String string) {
 		commandLine.append(string);
@@ -109,15 +109,15 @@ public class Terminal extends JFrame implements Observer{
 		commandLine.append("Utilizzare il comando 'help' per informazioni\n");
 	}
 	/**
-	 * Restituisce la JTextArea
-	 * @return la JTextArea
+	 * Restituisce la JTextArea.
+	 * @return la JTextArea.
 	 */
 	public JTextArea getCommandLine() {
 		return commandLine;
 	}
 	
 	/**
-	 * Stampa sul prompt la nuova lista dei numeri insieme al nuovo prompt
+	 * Stampa sul prompt la nuova lista dei numeri insieme al nuovo prompt.
 	 * 
 	 */
 	private void updatePrompt() {

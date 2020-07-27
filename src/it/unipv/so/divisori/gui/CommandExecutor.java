@@ -12,7 +12,8 @@ public class CommandExecutor {
 	
 	private Sequenza sequenza;
 	/**
-	 * Costruttore della classe CommandExecutor
+	 * Costruttore della classe CommandExecutor.
+	 * @param s istanza della classe Sequenza.
 	 */
 	public CommandExecutor(Sequenza s) {
 		sequenza = s;
@@ -20,8 +21,8 @@ public class CommandExecutor {
 	
 	/**
 	 * Esegue il comando passato come parametro.
-	 * @param command comando da eseguire
-	 * @return result risultato del comando
+	 * @param command interfaccia del comando da eseguire.
+	 * @return result risultato del comando.
 	 */
 	public String executeCommand(ICommand command) {
         return command.execute(sequenza);

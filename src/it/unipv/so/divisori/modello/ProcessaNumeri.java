@@ -3,99 +3,99 @@ package it.unipv.so.divisori.modello;
 
 /**
  * Classe che sfrutta il multithreading per cercare numeri in background.
- *
- * La richiesta è in request. Dopo ogni richiesta di 'toProcess' viene valutato il numero successivo. 
+ * La richiesta del numero da cercare � nella variabile 'richiesta'. 
+ * Dopo ogni richiesta di 'toProcess' viene valutato il numero successivo. 
  *
  */
 public class ProcessaNumeri {
 
-    //private final static Logger LOGGER = Logger.getLogger(ProcessaNumeri.class.getName());
+    /**
+     * Il successivo dell'attuale che deve essere calcolato.
+     */
+    private Numero richiesta;
 
     /**
-     * Il successivo dell'attuale che deve essere calcolato
+     * Prossimo numero che va valutato.
      */
-    private Numero request;
+    private long daProcessare;
 
     /**
-     * Prossimo numero che va valutato
+     * Ultimo numero valutato.
      */
-    private long toProcess;
+    private long processato;
 
     /**
-     * Ultimo numero valutato
+     * Sequenza di numeri calcolati.
      */
-    private long processed;
+    private Sequenza sequenza;
 
     /**
-     * Sequenza di numeri calcolati
+     * Costruttore della classe ProcessaNumeri.
+     * @param s sequenza dei numeri memorizzati fino ad ora.
      */
-    private Sequenza sequence;
-
-
-    public ProcessaNumeri(Sequenza sequence) {
-        this.sequence = sequence;
+    public ProcessaNumeri(Sequenza s) {
+        this.sequenza = s;
     }
 
     /**
-     * Inizia il calcolo con il numero di thread precisato
+     * Inizia il calcolo con il numero di thread specificato.
+     * @param nThread numero di thread
      */
-    public void startThreads(int poolSize) {
-        for (int i = 0; i < poolSize; i++)
+    public void startThreads(int nThread) {
+        for (int i = 0; i < nThread; i++)
             new ContaDivisori(this).start();
     }
 
     /**
-     * Chiede di processare il successivo
-     *
-     * Se processor è bloccato, verrà interrotta la richiesta
+     * Il metodo permette di processare il successivo numero. 
+     * Se il ProcessaNumeri e' bloccato, verra' interrotta la richiesta.
+     * @param n 
+     * @throws InterruptedException
      */
-    synchronized public void nextAntiPrime(Numero n) throws InterruptedException {
-        while (request != null) {
-            if (request.getValue() == n.getValue())
-                return;
+    synchronized public void nextNumber(Numero n) throws InterruptedException {
+        while (richiesta != null) {
+            if (richiesta.getValue() == n.getValue())	return;
             wait();
         }
-        request = n;
-        processed = request.getValue();
-        toProcess = request.getValue() + 1;
+        richiesta = n;
+        processato = richiesta.getValue();
+        daProcessare = richiesta.getValue() + 1;
         System.out.println("\n\nRichiesta di calcolare " + n.getValue());
-        //LOGGER.info("Asked to find the successor of " + n.getValue());
         notifyAll();
     }
 
     /**
-     * Libera il processor
+     * Il metodo permette di liberare il ProcessaNumeri.
      */
     synchronized private void acceptRequests() {
-        request = null;
+        richiesta = null;
         notifyAll();
     }
 
     /**
-     * Usato per avere un numero da processare
-     * Se non c'è nulla da processare, il thread viene bloccato
+     * Il metodo serve per avere un numero da processare.
+     * Se non c'e' nulla da processare, il thread viene bloccato.
+     * 
+     * @throws InterruptedException
      */
     synchronized public long nextNumberToProcess() throws InterruptedException {
-        while (request == null)
-            wait();
-        return toProcess++;
+        while (richiesta == null)	wait();
+        return daProcessare++;
     }
 
     /**
-     * Qui i thread comunicano il risultato
+     * Qui i thread comunicano il risultato.
+     * @param n
      */
-    synchronized public void passResult(Numero number) throws InterruptedException {
-        while (request != null && number.getValue() != processed + 1)
-            wait();
-        if (request == null)
-            return;
-        if (number.getDivisors() > request.getDivisors()) {
-            // A new antiprime has been found!
-            processed++;
-            sequence.AddNumber(number);
+    synchronized public void passaRisultato(Numero n) throws InterruptedException {
+        while (richiesta != null && n.getValue() != processato + 1)	wait();
+        if (richiesta == null)	return;
+        if (n.getDivisors() > richiesta.getDivisors()) {
+            processato++;
+            sequenza.aggiungiNumero(n);
             acceptRequests();
-        } else if (number.getValue() == processed + 1) {
-            processed++;
+        } else if (n.getValue() == processato + 1) {
+            processato++;
             notifyAll();
         }
     }

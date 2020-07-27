@@ -7,10 +7,7 @@ import it.unipv.so.divisori.modello.Sequenza;
 /**
  * La classe serve per inizializzare le varibili e lanciare il programma.
  * */
-public class Launcher {
-	@SuppressWarnings("unused")
-	private Sequenza sequence;
-	
+public class Launcher {	
     /**
      * Lancia il programma.
      */

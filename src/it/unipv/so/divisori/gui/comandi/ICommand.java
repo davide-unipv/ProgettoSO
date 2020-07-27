@@ -11,7 +11,7 @@ import it.unipv.so.divisori.modello.Sequenza;
 public interface ICommand {
 
 	/**
-	 * Esegue le azioni effettive del comando.
+	 * Il metodo viene implementato per ogni istruzione possibile dalle classe che estendono l'interfaccia ICommand.
 	 * @param s istanza della classe Sequenza
 	 * @return result risultato del comando
 	 * 

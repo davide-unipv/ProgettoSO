@@ -8,14 +8,17 @@ import it.unipv.so.divisori.gui.comandi.StopCommand;
 import it.unipv.so.divisori.modello.Sequenza;
 
 /**
- * Classe che permette di processare e mandare in esecuzione i programmi
- * digitati dal terminale.
+ * Classe che permette di processare e mandare in esecuzione i 
+ * programmi digitati dal terminale.
  *
  */
 public class CommandProcessor {
 	
 	private CommandExecutor cmdExecutor;
-
+	/**
+	 * Costruttore della classe CommandProcessor.
+	 * @param s istanza della classe Sequenza
+	 * */
 	public CommandProcessor(Sequenza s) {
 		cmdExecutor = new CommandExecutor(s);
 	}
@@ -23,8 +26,8 @@ public class CommandProcessor {
 	/**
 	 * Riceve la riga di comando con gli argomenti e manda in esecuzione
 	 * il relativo comando.
-	 * @param commandln la riga di comando 
-	 * @return result il risultato del comando
+	 * @param commandln la riga di comando.
+	 * @return il risultato del comando.
 	 * 
 	 */
 	@SuppressWarnings("unused")
@@ -32,8 +35,7 @@ public class CommandProcessor {
 		String[] commandSplit = commandln.split(" ");
 	    String command = commandSplit[0].trim();
 	    String cmdArgs = null;
-	    if (commandln.length() > command.length() + 1)
-	    	cmdArgs = commandln.substring(command.length() + 1);
+	    if (commandln.length() > command.length() + 1)	cmdArgs = commandln.substring(command.length() + 1);
 	    
 	    String result;
 	    if (command.equalsIgnoreCase(Commands.HELP)) {
